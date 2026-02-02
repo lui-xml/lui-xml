@@ -7,8 +7,11 @@ specifically the XML-based declarative UI subsystem that was removed from LVGL i
 PR #9565.
 
 **Source Repository**: https://github.com/lvgl/lvgl
+
 **Extraction Method**: git-filter-repo with path filtering and symbol migration
-**Extraction Date**: 2025
+
+**Extraction Date**: February 02, 2026
+
 **Extraction Performed By**: Kevin Wright <kevin@bigpod.io>
 
 ## Authorship Preservation
@@ -99,9 +102,3 @@ We acknowledge and thank the LVGL project and all contributors listed above
 for their original work on the XML-based declarative UI subsystem. This
 extraction aims to preserve that functionality as an independent library
 while maintaining proper attribution to all original authors.
-
----
-
-**Last Updated**: 2025-02-02
-**Repository**: https://github.com/lui-xml/lui-xml
-**License**: MIT (derived from LVGL, also MIT)
