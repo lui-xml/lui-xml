@@ -8,7 +8,7 @@ Lui-XML is a standalone extension library for LVGL that restores XML-based
 declarative UI capabilities. It provides a parser and loader that allows
 you to define user interfaces in XML format instead of C code.
 
-> **Note**: LVGL removed XML-based declarative UI in PR #9565. Lui-XML
+> **Note**: LVGL removed XML-based declarative UI in [lvgl/lvgl#9565](https://github.com/lvgl/lvgl/pull/9565). Lui-XML
 > preserves this functionality as an independent library for LVGL v9.x.
 
 ## Features
