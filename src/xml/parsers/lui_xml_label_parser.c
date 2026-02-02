@@ -9,8 +9,8 @@
 #include "lui_xml_label_parser.h"
 #if LV_USE_XML && LV_USE_LABEL
 
-#include "../../../lvgl.h"
-#include "../../../lvgl_private.h"
+#include <lvgl.h>
+#include "luixml_compat.h"
 
 /*********************
  *      DEFINES

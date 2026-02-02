@@ -9,8 +9,8 @@
 #include "lui_xml_slider_parser.h"
 #if LV_USE_XML && LV_USE_SLIDER
 
-#include "../../../lvgl.h"
-#include "../../../lvgl_private.h"
+#include <lvgl.h>
+#include "luixml_compat.h"
 
 /*********************
  *      DEFINES

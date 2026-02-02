@@ -36,14 +36,54 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 message(STATUS "${PROJECT_NAME} v${LUI_XML_VERSION}")
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
-# TODO: Phase 3 - Implement full CMake configuration
-# TODO: Phase 3 - Add LVGL dependency detection
-# TODO: Phase 3 - Add version checking (LVGL v9.1.0 required)
-# TODO: Phase 3 - Configure include directories
-# TODO: Phase 3 - Add source files
-# TODO: Phase 3 - Create lui_xml library target
+# Find LVGL dependency
+# LVGL v9.0+ must be installed separately
 
-# For now, just list the source files that exist
+# Try to find LVGL using standard methods
+if(TARGET lvgl::lvgl)
+    message(STATUS "  LVGL: Found (lvgl::lvgl target)")
+    set(LVGL_FOUND TRUE)
+elseif(DEFINED LVGL_DIR)
+    # User specified LVGL directory
+    set(CMAKE_PREFIX_PATH ${LVGL_DIR} ${CMAKE_PREFIX_PATH})
+    find_package(lvgl REQUIRED)
+    set(LVGL_FOUND TRUE)
+else()
+    message(WARNING "LVGL not found. Please set LVGL_DIR or ensure LVGL is installed.")
+    set(LVGL_FOUND FALSE)
+endif()
+
+# Version check - require LVGL v9.0+
+if(LVGL_FOUND AND TARGET lvgl::lvgl)
+    # Version detection will be handled by compile-time checks in luixml_compat.h
+    message(STATUS "  Lui-XML: Configuring for LVGL v9.x")
+endif()
+
+# Lui-XML source files (Phase 2: Compatibility Layer)
+set(LUI_XML_COMPAT_SOURCES
+    src/luixml_compat.c
+)
+
+# All XML source files (extracted from LVGL)
+file(GLOB_RECURSE LUI_XML_XML_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/xml/*.c"
+)
+
+set(LUI_XML_SOURCES
+    ${LUI_XML_COMPAT_SOURCES}
+    ${LUI_XML_XML_SOURCES}
+)
+
+set(LUI_XML_INCLUDE_DIRS
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/xml
+)
+
+message(STATUS "  Lui-XML source files: ${LUI_XML_SOURCES}")
+message(STATUS "  Lui-XML include dirs: ${LUI_XML_INCLUDE_DIRS}")
+
+# TODO: Phase 3 - Create lui_xml library target
+# TODO: Phase 3 - Add source files to target
 file(GLOB_RECURSE LUI_XML_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.c"
 )
