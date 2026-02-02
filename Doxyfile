@@ -1,0 +1,199 @@
+# Doxyfile configuration for Lui-XML
+
+# Project information
+PROJECT_NAME           = "Lui-XML"
+PROJECT_NUMBER         = "9.1.0-1.0.0"
+PROJECT_BRIEF          = "Lightweight User Interface XML - XML-based declarative UI for LVGL"
+
+# Output directory
+OUTPUT_DIRECTORY       = docs/html
+
+# Input directories
+INPUT                  = src/xml \
+                           src \
+                           README.md \
+                           MIGRATION.md
+
+# File patterns
+FILE_PATTERNS           = *.h \
+                           *.c \
+                           *.md
+
+# Recursive scanning
+RECURSIVE              = YES
+
+# Extraction mode
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+
+# Documentation language
+INPUT_ENCODING         = UTF-8
+USE_MDFILE_AS_MAINPAGE = YES
+
+# Javadoc style commands
+JAVADOC_AUTOBRIEF      = YES
+JAVADOC_BANNER         = NO
+
+# Qt style
+QT_AUTOBRIEF           = NO
+MULTILINE_CPP_IS_BRIEF = NO
+
+# Python docstring
+PYTHON_DOCSTRING       = NO
+INHERIT_DOCS           = YES
+
+# Look for documentation in C comments
+LOOKUP_CACHE_SIZE      = 0
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = YES
+WARN_FORMAT            = /usr/bin/doxygen
+
+# Warnings as errors
+WARN_AS_ERROR          = NO
+
+# Output types
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+GENERATE_RTF           = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+
+# HTML options
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_TIMESTAMP         = NO
+HTML_DYNAMIC_SECTIONS  = YES
+HTML_INDEX             = YES
+HTML_DYNAMIC_MENUBAR   = YES
+
+# Navigation
+HAVE_DOT               = YES
+DOT_NUM_THREADS        = 4
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+
+# PlantUML diagrams (if available)
+HAVE_PLANTUML          = NO
+PLANTUML_JAR_PATH      =
+
+# Graphviz hierarchy
+CLASS_DIAGRAMS         = YES
+COLLABORATION_GRAPH    = YES
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+GRAPHICAL_HIERARCHY    = YES
+DIRECTORY_GRAPH        = YES
+
+# Preprocessing
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = NO
+SEARCH_INCLUDES        = YES
+INCLUDE_PATH           = src/xml
+
+# Generate tag file
+GENERATE_TAGFILE       = docs/lui_xml.tag
+
+# External references
+TAGFILES               =
+EXTERNAL_GROUPS        = YES
+
+# Layout
+LAYOUT_FILE            =
+
+# Cite
+CITE_BIB_FILES         =
+
+# Messages
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+
+# Logging
+WARN_LOGFILE           =
+
+# Optimization
+OPTIMIZE_OUTPUT_JAVA   = NO
+OPTIMIZE_FOR_C         = YES
+OPTIMIZE_OUTPUT_VHDL   = NO
+
+# Build
+EXTRA_PACKAGES         =
+
+# Version control
+USE_MDFILE_AS_MAINPAGE = YES
+
+# Language
+OUTPUT_LANGUAGE        = English
+
+# Charset
+DOXYFILE_ENCODING      = UTF-8
+
+# Aliases
+ALIASES                = "version=\1" \
+                         "issue=\1" \
+                         "todo=\1"
+
+# Tcl
+TCL_SUBST              =
+
+# Algorithms
+ALPHABETICAL_INDEX     = YES
+COLS_IN_ALPHA_INDEX    = 3
+
+# Configuration options
+DISABLE_INDEX          = NO
+GENERATE_TREEVIEW      = YES
+TREEVIEW_WIDTH         = 250
+
+# Markdown
+MARKDOWN_SUPPORT       = YES
+TOC_INCLUDE_HEADINGS   = 5
+
+# External references
+EXTERNAL_GROUPS        = YES
+
+# LaTeX
+LATEX_CMD_NAME         = latex
+MAKEINDEX_CMD_NAME     = makeindex
+COMPACT_LATEX          = NO
+PAPER_TYPE             = a4
+
+# Dot
+CLASS_DIAGRAMS         = YES
+MSCGEN_PATH            =
+
+# Paths
+STRIP_FROM_PATH        = src/xml/
+STRIP_FROM_INC_PATH    = src/xml/
+
+# Platform
+EXTRA_PACKAGES         =
+
+# Custom includes
+INCLUDE_PATH           = src/xml
+
+# Preprocessor
+PREDEFINED             = DOXYGEN_SHOULD_SKIP_THIS
+EXPAND_AS_DEFINED      = LUI_XML_VERSION_MAJOR=9 \
+                         LUI_XML_VERSION_MINOR=1 \
+                         LUI_XML_VERSION_PATCH=0
+
+# Skip parsing
+SKIP_FUNCTION_MACROS   = YES
+
+# Verbatim
+VERBATIM_HEADERS       = NO
+
+# clang
+CLANG_ASSISTED_PARSING = NO
+
+# clang options
+CLANG_OPTIONS          =
+CLANG_DATABASE_PATH    =

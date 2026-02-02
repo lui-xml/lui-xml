@@ -189,6 +189,9 @@ message(STATUS "  Version: ${LUI_XML_VERSION}")
 message(STATUS "  Sources: ${LUI_XML_SOURCES}")
 message(STATUS "  Target: lui::xml")
 message(STATUS "  LVGL dependency: ${LVGL_TARGET}")
+if(DOXYGEN_FOUND)
+    message(STATUS "  Documentation: make docs (to generate API docs)")
+endif()
 message(STATUS "")
 
 # Export the library for find_package()
@@ -211,3 +214,31 @@ install(
         ${CMAKE_CURRENT_CURRENT_BINARY_DIR}/lui_xmlConfigVersion.cmake
     DESTINATION ${LIB_INSTALL_DIR}/cmake/lui_xml
 )
+
+###############################################################################
+# Documentation Target (Phase 5)
+###############################################################################
+
+# Add a custom target to generate documentation
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/docs)
+
+    add_custom_target(docs
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${DOXYGEN_OUT}
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_IN}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM
+    )
+
+    message(STATUS "  Doxygen: Found (run 'make docs' to generate API documentation)")
+else()
+    message(STATUS "  Doxygen: Not found (documentation generation disabled)")
+    # Create a placeholder target
+    add_custom_target(docs
+        COMMAND ${CMAKE_COMMAND} -E echo "Doxygen not found. Cannot generate documentation."
+    )
+endif()
+
