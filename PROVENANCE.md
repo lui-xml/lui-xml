@@ -99,9 +99,3 @@ We acknowledge and thank the LVGL project and all contributors listed above
 for their original work on the XML-based declarative UI subsystem. This
 extraction aims to preserve that functionality as an independent library
 while maintaining proper attribution to all original authors.
-
----
-
-**Last Updated**: 2025-02-02
-**Repository**: https://github.com/lui-xml/lui-xml
-**License**: MIT (derived from LVGL, also MIT)
