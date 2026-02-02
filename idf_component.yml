@@ -1,0 +1,59 @@
+# ESP-IDF Component Manifest for Lui-XML
+# Lui-XML: Lightweight User Interface XML for LVGL
+
+dependencies:
+  # Required LVGL dependency
+  # We support LVGL v9.0+ (caret version range: ^9.0.0)
+  lvgl:
+    version: ">=9.0.0,<10.0.0"
+    public: true
+
+# Component description
+description: "XML-based declarative UI library for LVGL v9.x"
+
+# Component version (follows semantic versioning)
+version: "9.1.0.1"
+
+# Component URLs
+url: https://github.com/lui-xml/lui-xml
+repository: https://github.com/lui-xml/lui-xml
+
+# Maintainer information
+maintainer: Kevin Wright <kevin@bigpod.io>
+
+# License information
+license: MIT
+
+# Tags for discoverability
+tags:
+  - ui
+  - xml
+  - lvgl
+  - declarative
+  - graphics
+
+# Supported ESP-IDF versions
+# Requires ESP-IDF v5.1+ for component registry support
+idf_target:
+  - esp32
+  - esp32s2
+  - esp32s3
+  - esp32c3
+  - esp32c6
+  - esp32h2
+
+# Minimum ESP-IDF version
+esp_idf_version: ">=5.1.0"
+
+# Files included in the component
+files:
+  include:
+    - "src/*.h"
+    - "src/xml/*.h"
+    - "src/xml/**/*.h"
+  source:
+    - "src/*.c"
+    - "src/xml/*.c"
+    - "src/xml/**/*.c"
+  build:
+    - "CMakeLists.txt"

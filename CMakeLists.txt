@@ -11,7 +11,7 @@ project(lui_xml
 
 # Project information
 set(PROJECT_NAME "Lui-XML")
-set(PROJECT_DESCRIPTION "XML-based declarative UI library for LVGL v9.1.0")
+set(PROJECT_DESCRIPTION "XML-based declarative UI library for LVGL v9.x")
 set(PROJECT_URL "https://github.com/lui-xml/lui-xml")
 
 # Version information
@@ -19,6 +19,7 @@ set(LUI_XML_VERSION_MAJOR 9)
 set(LUI_XML_VERSION_MINOR 1)
 set(LUI_XML_VERSION_PATCH 0)
 set(LUI_XML_VERSION "${LUI_XML_VERSION_MAJOR}.${LUI_XML_VERSION_MINOR}.${LUI_XML_VERSION_PATCH}")
+set(LUI_XML_SOVERSION 0)
 
 # Build type
 if(NOT CMAKE_BUILD_TYPE)
@@ -28,40 +29,111 @@ endif()
 # C standards
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
 
-# Find LVGL dependency
-# NOTE: LVGL v9.1.0 must be installed separately
-# This is a stub - full CMake configuration will be implemented in Phase 3
+###############################################################################
+# LVGL Dependency Detection
+###############################################################################
 
-message(STATUS "${PROJECT_NAME} v${LUI_XML_VERSION}")
-message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "")
+message(STATUS "Lui-XML v${LUI_XML_VERSION}")
+message(STATUS "--------------")
 
-# Find LVGL dependency
-# LVGL v9.0+ must be installed separately
+# Try to find LVGL using various methods
+set(LVGL_FOUND FALSE)
 
-# Try to find LVGL using standard methods
+# Method 1: Check if LVGL target already exists
 if(TARGET lvgl::lvgl)
     message(STATUS "  LVGL: Found (lvgl::lvgl target)")
+    set(LVGL_TARGET lvgl::lvgl)
     set(LVGL_FOUND TRUE)
-elseif(DEFINED LVGL_DIR)
-    # User specified LVGL directory
+elseif(TARGET lvgl)
+    message(STATUS "  LVGL: Found (lvgl target)")
+    set(LVGL_TARGET lvgl)
+    set(LVGL_FOUND TRUE)
+endif()
+
+# Method 2: Try find_package if LVGL_DIR is set
+if(NOT LVGL_FOUND AND DEFINED LVGL_DIR)
+    message(STATUS "  LVGL: Searching in ${LVGL_DIR}")
     set(CMAKE_PREFIX_PATH ${LVGL_DIR} ${CMAKE_PREFIX_PATH})
-    find_package(lvgl REQUIRED)
-    set(LVGL_FOUND TRUE)
+    find_package(lvgl QUIET)
+    if(lvgl_FOUND)
+        message(STATUS "  LVGL: Found via find_package")
+        set(LVGL_TARGET lvgl::lvgl)
+        set(LVGL_FOUND TRUE)
+    endif()
+endif()
+
+# Method 3: Try config mode
+if(NOT LVGL_FOUND)
+    find_package(lvgl QUIET CONFIG)
+    if(lvgl_FOUND)
+        message(STATUS "  LVGL: Found via CONFIG")
+        # Determine the target name
+        if(TARGET lvgl::lvgl)
+            set(LVGL_TARGET lvgl::lvgl)
+        elseif(TARGET lvgl)
+            set(LVGL_TARGET lvgl)
+        endif()
+        set(LVGL_FOUND TRUE)
+    endif()
+endif()
+
+# Fatal error if LVGL not found
+if(NOT LVGL_FOUND)
+    message(FATAL_ERROR
+        "Lui-XML requires LVGL v9.x but LVGL was not found.\n"
+        "Please ensure LVGL is available by one of these methods:\n"
+        "  1. Include LVGL before Lui-XML in your CMakeLists.txt\n"
+        "  2. Set LVGL_DIR to point to LVGL installation\n"
+        "  3. Install LVGL in a standard location"
+    )
+endif()
+
+message(STATUS "  LVGL target: ${LVGL_TARGET}")
+
+###############################################################################
+# Version Detection
+###############################################################################
+
+# Try to extract LVGL version from target or config
+# Note: This is best-effort. The actual version check happens at compile-time
+# in luixml_compat.h via the #error directives.
+
+set(LVGL_VERSION detected)
+
+# Try to get version from lvgl config if available
+if(DEFINED LVGL_VERSION_MAJOR)
+    set(LVGL_VERSION "${LVGL_VERSION_MAJOR}.${LVGL_VERSION_MINOR}.${LVGL_VERSION_PATCH}")
+    message(STATUS "  LVGL version: ${LVGL_VERSION}")
+
+    # Version compatibility check (support v9.0+)
+    if(LVGL_VERSION_MAJOR VERSION_LESS 9)
+        message(FATAL_ERROR
+            "Lui-XML v${LUI_XML_VERSION} requires LVGL v9.0 or later.\n"
+            "Detected LVGL v${LVGL_VERSION}."
+        )
+    elseif(LVGL_VERSION_MAJOR EQUAL 9 AND LVGL_VERSION_MINOR VERSION_GREATER 5)
+        message(WARNING
+            "Lui-XML has been tested with LVGL v9.0-v9.5.\n"
+            "Detected LVGL v${LVGL_VERSION}. Compatibility not guaranteed."
+        )
+    endif()
 else()
-    message(WARNING "LVGL not found. Please set LVGL_DIR or ensure LVGL is installed.")
-    set(LVGL_FOUND FALSE)
+    message(WARNING
+        "Lui-XML: Could not detect LVGL version.\n"
+        "Compile-time checks will validate compatibility."
+    )
 endif()
 
-# Version check - require LVGL v9.0+
-if(LVGL_FOUND AND TARGET lvgl::lvgl)
-    # Version detection will be handled by compile-time checks in luixml_compat.h
-    message(STATUS "  Lui-XML: Configuring for LVGL v9.x")
-endif()
+###############################################################################
+# Lui-XML Source Files
+###############################################################################
 
-# Lui-XML source files (Phase 2: Compatibility Layer)
+# Compatibility layer sources
 set(LUI_XML_COMPAT_SOURCES
-    src/luixml_compat.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/luixml_compat.c
 )
 
 # All XML source files (extracted from LVGL)
@@ -69,31 +141,73 @@ file(GLOB_RECURSE LUI_XML_XML_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/xml/*.c"
 )
 
+# Complete source list
 set(LUI_XML_SOURCES
     ${LUI_XML_COMPAT_SOURCES}
     ${LUI_XML_XML_SOURCES}
 )
 
-set(LUI_XML_INCLUDE_DIRS
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/xml
+# Add defines for conditional compilation
+add_definitions(-DLV_USE_XML=1)
+
+###############################################################################
+# Lui-XML Library Target
+###############################################################################
+
+# Create interface library (header-only plus extracted sources)
+add_library(lui_xml INTERFACE)
+
+# Add alias for consistency with LVGL naming
+add_library(lui::xml ALIAS lui_xml)
+
+# Include directories
+target_include_directories(lui_xml
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/xml
 )
 
-message(STATUS "  Lui-XML source files: ${LUI_XML_SOURCES}")
-message(STATUS "  Lui-XML include dirs: ${LUI_XML_INCLUDE_DIRS}")
-
-# TODO: Phase 3 - Create lui_xml library target
-# TODO: Phase 3 - Add source files to target
-file(GLOB_RECURSE LUI_XML_SOURCES
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.c"
+# Source files (for IDE projects and consistency)
+target_sources(lui_xml
+    INTERFACE
+        ${LUI_XML_SOURCES}
 )
 
-file(GLOB_RECURSE LUI_XML_HEADERS
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/**/*.h"
+# Link against LVGL
+target_link_libraries(lui_xml
+    INTERFACE
+        ${LVGL_TARGET}
 )
 
-message(STATUS "Found ${LUI_XML_SOURCES} source files")
-message(STATUS "Found ${LUI_XML_HEADERS} header files")
+###############################################################################
+# Build Summary
+###############################################################################
 
-# NOTE: This is a stub only. Do not use for building yet.
-# Phase 3 will implement the complete build system.
+message(STATUS "")
+message(STATUS "Lui-XML configuration complete:")
+message(STATUS "  Version: ${LUI_XML_VERSION}")
+message(STATUS "  Sources: ${LUI_XML_SOURCES}")
+message(STATUS "  Target: lui::xml")
+message(STATUS "  LVGL dependency: ${LVGL_TARGET}")
+message(STATUS "")
+
+# Export the library for find_package()
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR})
+set(LIB_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR})
+
+# Installation rules
+install(
+    DIRECTORY src/
+    DESTINATION ${INCLUDE_INSTALL_DIR}/lui_xml
+    FILES_MATCHING PATTERN "*.h"
+)
+
+install(
+    FILES
+        ${CMAKE_CURRENT_CURRENT_BINARY_DIR}/lui_xmlConfig.cmake
+        ${CMAKE_CURRENT_CURRENT_BINARY_DIR}/lui_xmlConfigVersion.cmake
+    DESTINATION ${LIB_INSTALL_DIR}/cmake/lui_xml
+)
