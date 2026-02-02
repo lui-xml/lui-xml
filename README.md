@@ -42,15 +42,7 @@ lui_xml_destroy(parser);
 
 ## Version Compatibility
 
-Lui-XML supports LVGL v9.0+:
-
-| Lui-XML Version | LVGL Version | Status |
-|-----------------|--------------|--------|
-| v9.1.0-x | v9.0 - v9.5 | ✅ Tested |
-| v9.1.0-x | v9.6+ | ⚠️  Untested (may work) |
-| v9.1.0-x | v8.x or v10.x | ❌ Not compatible |
-
-**Note**: Lui-XML v9.1.0-x is strictly coupled to LVGL v9.x major version.
+Lui-XML v9.1.0-x is strictly coupled to LVGL v9.x major version.
 
 ## Installation
 
@@ -178,9 +170,3 @@ authorship is fully preserved in the git history.
 
 **Original Contributors**: See [PROVENANCE.md](PROVENANCE.md) for complete list.
 
----
-
-**Project**: https://github.com/lui-xml/lui-xml
-**Version**: 9.1.0-1.0.0
-**Derived from**: LVGL v9.1.0
-**License**: MIT
