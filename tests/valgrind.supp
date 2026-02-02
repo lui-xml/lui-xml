@@ -1,0 +1,101 @@
+# Valgrind Suppressions for Lui-XML Test Suite
+#
+# This file contains suppressions for known false positives from
+# LVGL and system libraries that are not actual memory leaks
+# in Lui-XML code.
+
+###############################################################################
+# LVGL False Positives
+###############################################################################
+
+{
+   LVGL_static_buffers
+   Memcheck:Leak
+   ...
+   obj:*/lvgl/src/core/lv_timer.o*
+   obj:*/lvgl/src/core/lv_display.o*
+   obj:*/lvgl/src/misc/lv_mem.o*
+}
+
+{
+   LVGL_global_objects
+   Memcheck:Leak
+   ...
+   obj:*/lvgl/src/core/lv_obj.o*
+   obj:*/lvgl/src/widgets/lv_*.o*
+}
+
+###############################################################################
+# System Library False Positives
+###############################################################################
+
+{
+   glib_memory_pools
+   Memcheck:Leak
+   ...
+   obj:*/libglib-*.so*
+   obj:*/libgobject-*.so*
+}
+
+{
+   X11_client_side
+   Memcheck:Leak
+   ...
+   obj:*/libX11.so*
+   obj:*/libxcb.so*
+}
+
+###############################################################################
+# Test Framework False Positives
+###############################################################################
+
+{
+   gcov_daemon_data
+   Memcheck:Leak
+   ...
+   obj:*/libgcov*.so*
+   fun:gcov_*
+}
+
+{
+   __gcov_flush
+   Memcheck:Leak
+   ...
+   fun:__gcov_flush
+}
+
+###############################################################################
+# Thread-Local Storage
+###############################################################################
+
+{
+   tls_dtor_leaks
+   Memcheck:Leak
+   ...
+   fun:tls_free_dtor
+}
+
+###############################################################################
+# C Library Static Buffers
+###############################################################################
+
+{
+   stdio_buffers
+   Memcheck:Leak
+   fun:*printf*
+   fun:*scanf*
+   fun:*fwrite*
+   fun:*fread*
+}
+
+###############################################################################
+# Dynamic Loader
+###############################################################################
+
+{
+   dlopen_leaks
+   Memcheck:Leak
+   ...
+   fun:dlopen
+   fun:dlsym
+}
