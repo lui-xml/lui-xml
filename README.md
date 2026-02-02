@@ -19,7 +19,7 @@ you to define user interfaces in XML format instead of C code.
 - **Runtime Loading**: Load XML from strings or files at runtime
 - **Extensible**: Register custom widget parsers for your own widgets
 - **Namespace Isolated**: Uses `lui_xml_*` (public) and `luixml_*` (internal) namespaces
-- **Version Support**: Compatible with LVGL v9.0 through v9.5+
+- **Version Support**: Compatible with LVGL v9.x
 
 ## Quick Start
 
@@ -42,7 +42,7 @@ lui_xml_destroy(parser);
 
 ## Version Compatibility
 
-Lui-XML v9.1.0-x is strictly coupled to LVGL v9.x major version.
+Lui-XML v9.1.0-x is compatible with LVGL v9.x series.
 
 ## Installation
 

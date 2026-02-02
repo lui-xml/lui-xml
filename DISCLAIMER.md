@@ -27,11 +27,11 @@ declarative UI functionality originally removed from LVGL in PR #9565.
 
 ## Dependency Requirements
 
-Lui-XML **requires** LVGL v9.1.0 as an external dependency. This is a **strict
-version coupling** - Lui-XML v9.1.0-x is designed to work ONLY with LVGL v9.1.0.
+Lui-XML **requires** LVGL v9.0 or later as an external dependency. This is a **major
+version coupling** - Lui-XML v9.1.0-x is designed to work with LVGL v9.x series.
 
 Users must:
-1. Install LVGL v9.1.0 separately
+1. Install LVGL v9.0 or later separately
 2. Link Lui-XML as an additional component
 3. Follow LVGL's licensing terms (MIT, with attribution)
 
@@ -62,17 +62,7 @@ As a condition of using this software, users must:
 
 ## Version Compatibility
 
-**IMPORTANT**: Lui-XML v9.1.0-x is strictly coupled to LVGL v9.1.0.
-
-- **Supported**: LVGL v9.1.0
-- **Not Supported**: LVGL v9.0.x, v9.2.x, or any other version
-- **Future versions**: Will be released for corresponding LVGL versions
-
-Use with unsupported LVGL versions may result in:
-- Compilation failures
-- Runtime errors
-- Undefined behavior
-- Memory corruption
+Lui-XML v9.1.0-x is compatible with LVGL v9.x series.
 
 ## Legal Status
 

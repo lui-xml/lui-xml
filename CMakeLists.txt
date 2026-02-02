@@ -116,7 +116,7 @@ if(DEFINED LVGL_VERSION_MAJOR)
         )
     elseif(LVGL_VERSION_MAJOR EQUAL 9 AND LVGL_VERSION_MINOR VERSION_GREATER 5)
         message(WARNING
-            "Lui-XML has been tested with LVGL v9.0-v9.5.\n"
+            "Lui-XML is compatible with LVGL v9.x.\n"
             "Detected LVGL v${LVGL_VERSION}. Compatibility not guaranteed."
         )
     endif()
