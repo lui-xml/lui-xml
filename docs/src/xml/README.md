@@ -55,14 +55,6 @@ docs/src/xml/
 │   ├── online_share.rst   - Online sharing
 │   └── index.rst
 │
-├── editor/                - LVGL XML Editor
-│   ├── overview.rst       - Editor overview
-│   ├── install.rst        - Installation guide
-│   ├── user_interface.rst - UI reference
-│   ├── hotkeys.rst        - Keyboard shortcuts
-│   ├── license.rst        - Editor license
-│   └── index.rst
-│
 └── assets/                - Asset management
     ├── fonts.rst          - Font handling
     ├── images.rst         - Image handling
