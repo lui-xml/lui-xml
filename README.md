@@ -4,7 +4,7 @@
 
 ## Overview
 
-Once uon a time, the [LVGL]((https://github.com/lvgl/lvgl) library contained an open-source 
+Once uon a time, the [LVGL](https://github.com/lvgl/lvgl) library contained an open-source 
 XML-based declarative UI capabiliy. LVGL Kft decided to remove it in [lvgl/lvgl#9565](https://github.com/lvgl/lvgl/pull/9565)
 for business reasons.
 
