@@ -4,12 +4,26 @@
 
 ## Overview
 
-Lui-XML is a standalone extension library for LVGL that restores XML-based
-declarative UI capabilities. It provides a parser and loader that allows
-you to define user interfaces in XML format instead of C code.
+Once uon a time, the [LVGL]((https://github.com/lvgl/lvgl) library contained an open-source 
+XML-based declarative UI capabiliy. LVGL Kft decided to remove it in [lvgl/lvgl#9565](https://github.com/lvgl/lvgl/pull/9565)
+for business reasons.
 
-> **Note**: LVGL removed XML-based declarative UI in [lvgl/lvgl#9565](https://github.com/lvgl/lvgl/pull/9565). Lui-XML
-> preserves this functionality as an independent library for LVGL v9.x.
+Lui-XML is an independent standalone extension library for LVGL v9.x that restores that code, providing the same parser and 
+loader that allows you to define user interfaces in XML format instead of C code.
+
+**Important Note**
+
+It is important to note the folowing: A [license document](https://github.com/lvgl/lvgl/pull/8984/changes/d52d7c3696934d899a0381c9140f26ea093e6cba) related 
+to XML in the LVGL UI library was added to the docs in its repository. 
+
+The rough history of that document is as follows:
+
+- Although the date of the license states June 2025, it was never made public until October 1, 2025
+- On November 27, 2025 that document was moved
+- On February 3, 2026 LVGL Kft requested its inclusion in this repository (and in good faith it was)
+
+Due to the extraction method, in the history of this repository it shows as being added November 27, 2025 rather than October 1, 2025.
+
 
 ## Features
 
