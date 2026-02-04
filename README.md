@@ -13,8 +13,8 @@ loader that allows you to define user interfaces in XML format instead of C code
 
 **Important Note**
 
-It is important to note the folowing: A [license document](https://github.com/lvgl/lvgl/pull/8984/changes/d52d7c3696934d899a0381c9140f26ea093e6cba) related 
-to XML in the LVGL UI library was added to the docs in its repository. 
+A [license document](https://github.com/lvgl/lvgl/pull/8984/changes/d52d7c3696934d899a0381c9140f26ea093e6cba) related 
+to XML for the LVGL UI library was added to the docs in its repository. 
 
 The rough history of that document is as follows:
 
@@ -22,7 +22,7 @@ The rough history of that document is as follows:
 - On November 27, 2025 that document was moved
 - On February 3, 2026 LVGL Kft requested its inclusion in this repository (and in good faith it was)
 
-Due to the extraction method, in the history of this repository it shows as being added November 27, 2025 rather than October 1, 2025.
+Due to the extraction method undertaken, in the history of this repository it shows as being added November 27, 2025 rather than October 1, 2025.
 
 
 ## Features
